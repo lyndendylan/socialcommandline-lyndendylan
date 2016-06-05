@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %} {{super()}} {% endblock %}
+
+{% block head %}
+   {{super()}}
+{% endblock %}
+
+{% block content %}
+	<div class="container">
+
+		<div class="row">
+			<div class="col-md-12">
+				<div id="login-modal" class="modal">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h3>Add A Company</h3>
+						</div>
+						<div class="modal-body">
+							<input type="text" placeholder="Company Name" id="new_company">
+						</div>
+						<div class="modal-footer">
+							<button id="add_comp_btn" class="btn btn-success" onclick="addCompany();closeModal('add_company_modal');">Add Company to <span id="im_cool"></span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script>showModal("login-modal");</script>
+	</div>
+{% endblock %}
+
+{% block footer %}
+	{{ super() }}
+{% endblock %}

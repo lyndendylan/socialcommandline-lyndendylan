@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+        <title>{% block title %}Social Command Line{% endblock %}</title>
+        <link rel="stylesheet" href="/css/homepage.css?v=11">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.0.0/bootstrap-social.min.css" >
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script src="/js/utils.js"></script>
+    {% endblock %}
+</head>
+
+<body>
+    <header>
+        {% block header %}
+            
+        {% endblock %}
+    </header>
+
+    {% block content %}
+        
+    {% endblock %}
+
+    <footer>
+        {% block footer %}
+        &copy; Copyright 2008 by <a>Dylan Dannenhauer</a>.
+        {% endblock %}
+    </div>
+
+</body>
+</html>
