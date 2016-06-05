@@ -45,6 +45,13 @@ class HomePage(MainHandler):
     def get(self):
         self.render("homepage.html")
 
+class WhatIs(MainHandler):
+    def get(self):
+        self.render("whatis.html")
+
 app = webapp2.WSGIApplication([
-    ('/', HomePage)
+
+    ('/', HomePage),
+    ('/whatisscl', WhatIs)
+
 ], debug=True)
