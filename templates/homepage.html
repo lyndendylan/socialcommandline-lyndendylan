@@ -11,7 +11,7 @@
 
 		<div class="row">
 			<div class="col-md-12">
-				<div id="login-modal" class="modal" data-backdrop="static" data-backdrop="false">
+				<div id="login-modal" class="modal" data-backdrop="static" data-keyboard="false">
 					<div class="modal-content">
 						<div class="modal-header">
                             <div class="col-md-5 text-left">
@@ -26,7 +26,7 @@
 
 								<!-- Google Login -->
 								<div class="col-md-6">
-									<a class="btn btn-block btn-social btn-google">
+									<a href="{{url}}" class="btn btn-block btn-social btn-google">
     									<span class="fa fa-google"></span> Google
   									</a>
 								</div>
@@ -85,4 +85,5 @@
 
 {% block footer %}
 	{{ super() }}
+	<script src="google.js"></script>
 {% endblock %}

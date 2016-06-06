@@ -20,11 +20,14 @@ import os
 import json
 from google.appengine.ext import db
 from google.appengine.api import mail
+from google.appengine.api import users
+
 from xml.dom import minidom
 import random
 import pickle
 import string
 import re
+import logging
 
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape = True)
@@ -43,15 +46,30 @@ class MainHandler(webapp2.RequestHandler):
 
 class HomePage(MainHandler):
     def get(self):
-        self.render("homepage.html")
+    	if users.get_current_user():
+    		self.redirect("/profile")
+    	else:
+	    	google_login_url = users.create_login_url("/")
+	    	self.render("homepage.html", url=google_login_url)
 
 class WhatIs(MainHandler):
     def get(self):
         self.render("whatis.html")
 
+class Profile(MainHandler):
+	def get(self):
+		if users.get_current_user():
+			logout_url = users.create_logout_url("/")
+			user = users.get_current_user()
+			show_info(user)
+			self.render("google_profile.html", google_logout_url = logout_url)
+
+def show_info(user):
+	logging.info("nickname: %s, auth_domain: %s, email: %s, federated_identity: %s, federated_provided: %s, user_id: %s " % (user.nickname(), user.auth_domain(), user.email(), user.federated_identity(), user.federated_provider(), user.user_id()))
 app = webapp2.WSGIApplication([
 
     ('/', HomePage),
-    ('/whatisscl', WhatIs)
+    ('/whatisscl', WhatIs),
+    ('/profile', Profile)
 
 ], debug=True)
