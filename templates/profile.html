@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %} {{super()}} {% endblock %}
+
+{% block head %}
+   {{super()}}
+{% endblock %}
+
+{% block content %}
+	<a href="{{gurl}}" class="btn btn-block btn-social btn-google">
+    	<span class="fa fa-google"></span> Sign Out
+	</a>
+{% endblock %}
+
+{% block footer %}
+   {{super()}}
+{% endblock %}
