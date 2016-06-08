@@ -3,30 +3,31 @@
 <head>
     {% block head %}
         <title>{% block title %}Social Command Line{% endblock %}</title>
+        <meta name="google-signin-client_id" content="495648704485-v26akd5cfusb7aibvraaonnmp1d9sd0n.apps.googleusercontent.com">
         <link rel="stylesheet" href="/css/homepage.css?v=11">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.0.0/bootstrap-social.min.css" >
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+        <script src="https://apis.google.com/js/client.js?onload=setApiKey" async defer></script>
+        <script src="/js/google.js"></script>
         <script src="/js/utils.js"></script>
     {% endblock %}
 </head>
 
 <body>
     <header>
-        {% block header %}
-            <h2>Social Command Line</h2>
+        {% block header %}        
         {% endblock %}
     </header>
 
     {% block content %}
-        
     {% endblock %}
 
     <footer>
         {% block footer %}
-        &copy; Copyright 2008 by <a>Dylan Dannenhauer</a>.
         {% endblock %}
     </div>
 

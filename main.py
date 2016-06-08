@@ -18,16 +18,17 @@ import webapp2
 import jinja2
 import os
 import json
-from google.appengine.ext import db
-from google.appengine.api import mail
-from google.appengine.api import users
-
-from xml.dom import minidom
 import random
 import pickle
 import string
 import re
 import logging
+
+from google.appengine.ext import db
+from google.appengine.api import mail
+from google.appengine.api import users
+from xml.dom import minidom
+from models import User
 
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape = True)
@@ -46,30 +47,41 @@ class MainHandler(webapp2.RequestHandler):
 
 class HomePage(MainHandler):
     def get(self):
-    	if users.get_current_user():
-    		self.redirect("/profile")
-    	else:
-	    	google_login_url = users.create_login_url("/")
-	    	self.render("homepage.html", url=google_login_url)
+        if not users.get_current_user():
+            google_login_url = users.create_login_url("/")
+            self.render("homepage.html", gurl = google_login_url)
+        else:
+            self.redirect("/profile")
 
 class WhatIs(MainHandler):
     def get(self):
         self.render("whatis.html")
 
 class Profile(MainHandler):
-	def get(self):
-		if users.get_current_user():
-			logout_url = users.create_logout_url("/")
-			user = users.get_current_user()
-			show_info(user)
-			self.render("google_profile.html", google_logout_url = logout_url)
+    def get(self):
+        user = users.get_current_user()
+        if user:
+            show_info(user)
+            check_user_exists(user)
+            google_logout_url = users.create_logout_url("/")
+            self.render("profile.html", gurl = google_logout_url)
+		
+class ShowData(MainHandler):
+    def get(self):
+        users = User.get_all()
+        self.render("data.html", users=users)
+
+def check_user_exists(user):
+    pass
 
 def show_info(user):
 	logging.info("nickname: %s, auth_domain: %s, email: %s, federated_identity: %s, federated_provided: %s, user_id: %s " % (user.nickname(), user.auth_domain(), user.email(), user.federated_identity(), user.federated_provider(), user.user_id()))
+
 app = webapp2.WSGIApplication([
 
     ('/', HomePage),
     ('/whatisscl', WhatIs),
-    ('/profile', Profile)
+    ('/profile', Profile),
+    ('/showdata', ShowData)
 
 ], debug=True)

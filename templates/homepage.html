@@ -8,7 +8,6 @@
 
 {% block content %}
 	<div class="container">
-
 		<div class="row">
 			<div class="col-md-12">
 				<div id="login-modal" class="modal" data-backdrop="static" data-keyboard="false">
@@ -26,7 +25,7 @@
 
 								<!-- Google Login -->
 								<div class="col-md-6">
-									<a href="{{url}}" class="btn btn-block btn-social btn-google">
+									<a href="{{gurl}}" style="width: 100%" class="btn btn-block btn-social btn-google">
     									<span class="fa fa-google"></span> Google
   									</a>
 								</div>
@@ -85,5 +84,4 @@
 
 {% block footer %}
 	{{ super() }}
-	<script src="google.js"></script>
 {% endblock %}
