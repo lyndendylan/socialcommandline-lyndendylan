@@ -34,8 +34,7 @@ import oauthclient.forms
 import oauthclient.models
 import functools
 import twitter
-import TwitterController
-
+from TwitterController import TwitterController
 from gaesessions import get_current_session
 from gaesessions import delete_expired_sessions
 from google.appengine.ext import ndb
@@ -59,10 +58,8 @@ class MainHandler(webapp2.RequestHandler):
     def render(self, template, **kwargs):
         self.write(self.render_str(template, **kwargs))
 
-
 class HomePage(MainHandler):
     def get(self):
-        twitter_service = TwitterController.get_twitter_service()
         self.render("homepage.html")
 
 class WhatIs(MainHandler):
@@ -71,30 +68,41 @@ class WhatIs(MainHandler):
 
 class Profile(MainHandler):
     def get(self):
-        pass
-		
+        template_values = {"twitter_screen_name": self.profile.key().id_or_name(),
+                               "example_data": self.profile.example_data if self.profile.example_data is not None else "",
+                               "profile_saved": profile_saved}
+        self.render("profile.html", **template_values)
+
 class ShowData(MainHandler):
     def get(self):
         users = User.get_all()
         self.render("data.html", users=users)
 
+
+class Delete(MainHandler):
+    def get(self):
+        oauthclient.models.OAuthService.delete()
+
 class TwitterAuthorized(MainHandler):
     def get(self):
-        twitter_service = oauthclient.models.OAuthService.get_by_key_name("twitter")
-        verifier = self.request.get("oauth_verifier")
+        twitter_service = TwitterController.get_twitter_service()
+        verifier = str(self.request.get("oauth_verifier"))
         session = get_current_session()
         key = session.get('twitter_request_key')
         secret = session.get('twitter_request_secret')
+        logging.info("verififier: %s key: %s secret: %s" % (verifier, key, secret))
         if key is None or secret is None:
             self.error(500)
             return
 
-        key, secret = oauthclient.exchange_request_token_for_access_token(twitter_service.consumer_key,
-                                                                          twitter_service.consumer_secret,
-                                                                          twitter_service.access_token_url,
-                                                                          verifier,
-                                                                          key,
-                                                                          secret)
+        key, secret = oauthclient.exchange_request_token_for_access_token(
+                                                                            twitter_service.consumer_key,
+                                                                            twitter_service.consumer_secret,
+                                                                            twitter_service.access_token_url,
+                                                                            verifier,
+                                                                            key,
+                                                                            secret
+                                                                        )
 
         twitapi = twitter.Api(twitter_service.consumer_key,
                               twitter_service.consumer_secret,
@@ -125,20 +133,19 @@ class Admin(MainHandler):
         else:
             self.redirect("/admin")
 
-class SignInWithTwitter(MainHandler):
+class TwitterSignin(MainHandler):
     def get(self):
-        twitter_service = oauthclient.models.OAuthService.get_by_key_name("twitter")
 
-        key, secret = oauthclient.retrieve_service_request_token(twitter_service.request_token_url,
-                                                                 twitter_service.consumer_key,
-                                                                 twitter_service.consumer_secret)
         session = get_current_session()
-        if session.is_active():
-            session.terminate()
+        twitter_service = TwitterController.get_twitter_service()
+
+        key, secret = oauthclient.retrieve_service_request_token(twitter_service.request_token_url,twitter_service.consumer_key,twitter_service.consumer_secret)    
         session['twitter_request_key'] = key
         session['twitter_request_secret'] = secret
 
-        self.redirect(oauthclient.generate_authorize_url(twitter_service.authenticate_url, key))
+        logging.info(key + "," + secret)
+        #logging.info(type(str(oauthclient.generate_authorize_url(twitter_service.authenticate_url, key))))
+        self.redirect(str(oauthclient.generate_authorize_url(twitter_service.authenticate_url, key)))
 
 class SignOut(MainHandler):
     def get(self):
@@ -160,11 +167,11 @@ app = webapp2.WSGIApplication([
     ('/whatisscl', WhatIs),
     ('/profile', Profile),
     ('/showdata', ShowData),
-    ('/registertwitter', RegisterTwitter),
     ('/admin', Admin),
-    ('/signin', SignInWithTwitter),
+    ('/twitter_signin', TwitterSignin),
     ('/twitterauthorized', TwitterAuthorized),
-    ('/signout', SignOut)
+    ('/signout', SignOut),
+    ('/delete', Delete)
 
 
 
