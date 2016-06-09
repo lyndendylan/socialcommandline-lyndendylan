@@ -18,18 +18,20 @@
 </head>
 
 <body>
-    <header>
-        {% block header %}        
-        {% endblock %}
-    </header>
+
+    {% block header %}
+        <div class="container">
+            <div class="row">
+                <h3>Welcome To the Social Command Line</h3>
+            </div>
+        </div>        
+    {% endblock %}
 
     {% block content %}
     {% endblock %}
 
-    <footer>
-        {% block footer %}
-        {% endblock %}
-    </div>
+    {% block footer %}
+    {% endblock %}
 
 </body>
 </html>

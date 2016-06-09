@@ -4,7 +4,9 @@ runtime: python27
 api_version: 1
 threadsafe: yes
 
-
+env_variables:
+  DJANGO_SETTINGS_MODULE: 'settings'
+  
 handlers:
 - url: /favicon\.ico
   static_files: favicon.ico
@@ -19,9 +21,11 @@ handlers:
 - url: .*
   script: main.app
   secure: always 
-  
+
 libraries:
 - name: webapp2
   version: "2.5.2"
 - name: jinja2
+  version: latest
+- name: django
   version: latest

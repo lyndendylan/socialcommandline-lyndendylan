@@ -7,78 +7,28 @@
 {% endblock %}
 
 {% block content %}
-	<div class="container">
+	<div class="container" style="margin-top: 2%">
 		<div class="row">
-			<div class="col-md-12">
-				<div id="login-modal" class="modal" data-backdrop="static" data-keyboard="false">
-					<div class="modal-content">
-						<div class="modal-header">
-                            <div class="col-md-5 text-left">
-								<h4>Social Command Line </h4>
-							</div>
-							<div class="col-md-4 text-left">
-								<p><a class="what-is-scl-link" href="/whatisscl" target="_blank">What Is This</a></p>
-							</div>
-						</div>
-						<div class="modal-body">
-							<div class="row">
+			<div class="col-xs-4">
 
-								<!-- Google Login -->
-								<div class="col-md-6">
-									<a href="{{gurl}}" style="width: 100%" class="btn btn-block btn-social btn-google">
-    									<span class="fa fa-google"></span> Google
-  									</a>
-								</div>
+				<!-- Facebook Login -->
+				<a class="btn btn-block btn-social btn-facebook">
+					<span class="fa fa-facebook"></span> Load Facebook Engine
+				</a>
+			</div>
+		</div>
+			<div class="row">
+				<div class="col-xs-4">
 
-								<!-- Facebook Login -->
-								<div class="col-md-6">
-									<a class="btn btn-block btn-social btn-facebook">
-    									<span class="fa fa-facebook"></span> Facebook
-  									</a>
-								</div>
+					<!-- twitter Login -->
+					<!-- <a href="/signin"><img alt="Sign in with Twitter" src="https://si0.twimg.com/images/dev/buttons/sign-in-with-twitter-l.png"/></a> -->
 
-							</div>
-							<div class="row">
-
-								<!-- Twitter Login -->
-								<div class="col-md-6">
-									<a class="btn btn-block btn-social btn-twitter">
-    									<span class="fa fa-twitter"></span> Twitter
-  									</a>
-								</div>
-							
-								<!-- Instagram Login -->
-								<div class="col-md-6">
-									<a class="btn btn-block btn-social btn-instagram">
-    									<span class="fa fa-instagram"></span> Instagram
-  									</a>
-								</div>
-							</div>
-							<div class="row">
-
-								<!-- LinkedIn Login -->
-								<div class="col-md-6">
-									<a class="btn btn-block btn-social btn-linkedin">
-    									<span class="fa fa-linkedin"></span> LinkedIn
-  									</a>
-								</div>
-							
-								<!-- Reddit Login -->
-								<div class="col-md-6">
-									<a class="btn btn-block btn-social btn-reddit">
-    									<span class="fa fa-reddit"></span> Reddit
-  									</a>
-								</div>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button class="btn btn-primary">Cancel</button>
-						</div>
-					</div>
+					<a href="/signin" class="btn btn-block btn-social btn-twitter">
+	    				<span class="fa fa-twitter"></span> Load Twitter Engine
+	  				</a>
 				</div>
 			</div>
 		</div>
-		<script>showModal("login-modal");</script>
 	</div>
 {% endblock %}
 
