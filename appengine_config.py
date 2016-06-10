@@ -1,7 +1,6 @@
-# from google.appengine.ext import vendor
-# vendor.add('lib')
 import sys
 import os 
+
 sys.path.append(os.path.join(os.path.dirname(__file__), "lib"))
 
 from gaesessions import SessionMiddleware
