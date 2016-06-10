@@ -91,7 +91,16 @@ class TwitterCallback(MainHandler):
         auth_token = self.request.get("oauth_token")
         auth_verifier = self.request.get("oauth_verifier")
         user_info = client.get_user_info(auth_token, auth_verifier=auth_verifier)
-        self.render("twitter.html", user_info = json.dumps(dir(user_info)), client = json.dumps(dir(client)))
+        response = client.make_request(
+            "https://api.twitter.com/1.1/search/tweets.json",
+            auth_token
+        )
+
+        self.render("twitter.html", 
+                    user_info = json.dumps(dir(user_info)), 
+                    client = json.dumps(dir(client)),
+                    response = json.dumps(dir(response))
+                    )
 
 def check_user_exists(user):
     pass
