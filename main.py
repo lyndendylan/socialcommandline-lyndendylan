@@ -84,36 +84,11 @@ class ShowData(MainHandler):
 
 class TwitterSignin(MainHandler):
     def get(self):
-        client = oauth.TwitterClient(consumer_key, consumer_secret, callback_url)
-        self.redirect(client.get_authorization_url())
+        pass
 
 class TwitterCallback(MainHandler):
     def get(self):
-        #My App Twitter Client object
-        client = oauth.TwitterClient(consumer_key, consumer_secret, callback_url)
-        
-        #retrieve the auth_token from the client who has logged in
-        #retrieve the verifier
-        auth_token = self.request.get("oauth_token")
-        auth_verifier = self.request.get("oauth_verifier")
-
-        #retrieve twitter user info on our logged in user
-        user_info = client.get_user_info(auth_token, auth_verifier=auth_verifier)
-
-        response = client.make_request(
-            "https://api.twitter.com/1.1/search/tweets.json",
-            token=access_token,
-            secret=user_info["secret"],
-            method=urlfetch.GET,
-            additional_params={"oauth_verifier":auth_verifier}
-        )
-
-        content = response.content
-
-        self.render("twitter.html",  
-                    client = json.dumps(vars(client)),
-                    content = json.dumps(content)
-                    )
+        pass
 
 def check_user_exists(user):
     pass
