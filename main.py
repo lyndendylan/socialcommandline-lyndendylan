@@ -80,10 +80,9 @@ class ShowData(MainHandler):
         users = User.get_all()
         self.render("data.html", users=users)
 
-
 class TwitterSignin(MainHandler):
     def get(self):
-        
+    	pass 
 
 class TwitterCallback(MainHandler):
     def get(self):
