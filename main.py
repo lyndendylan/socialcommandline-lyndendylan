@@ -32,7 +32,7 @@ import logging
 import httplib2
 import functools
 import twitter
-import requests
+import requests 
 
 from TwitterController import TwitterController
 from appengine_oauth import oauth
@@ -41,9 +41,11 @@ from gaesessions import delete_expired_sessions
 from google.appengine.ext import ndb
 from google.appengine.api import mail
 from google.appengine.api import users
+from google.appengine.api import urlfetch
+from urllib import unquote as urlunquote
 from xml.dom import minidom
 
-
+access_token = "739842667916492800-FJg9hohBppMJ8w816cmJVCE6tv58825"
 consumer_key = "MIEorUIGXR3Z4W4aUsv83hled"
 consumer_secret = "GyEJT7eTiYTIWmyc2sNGnFXNv790DAhNe9CrxNYwoUm5yMMfN0"
 callback_url = "https://socialcommandline.appspot.com/twitter_callback"
@@ -82,16 +84,11 @@ class ShowData(MainHandler):
 
 class TwitterSignin(MainHandler):
     def get(self):
-        client = oauth.TwitterClient(consumer_key, consumer_secret, callback_url)
-        self.redirect(client.get_authorization_url())
+        pass
 
 class TwitterCallback(MainHandler):
     def get(self):
-        client = oauth.TwitterClient(consumer_key, consumer_secret, callback_url)
-        auth_token = self.request.get("oauth_token")
-        auth_verifier = self.request.get("oauth_verifier")
-        user_info = client.get_user_info(auth_token, auth_verifier=auth_verifier)
-        self.render("twitter.html", user_info = json.dumps(dir(user_info)), client = json.dumps(dir(client)))
+        pass
 
 def check_user_exists(user):
     pass
