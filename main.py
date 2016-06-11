@@ -20,7 +20,7 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), "lib"))
 sys.path.append(os.path.join(os.path.dirname(__file__), "Controllers"))
 
-
+import tweepy
 import webapp2
 import jinja2
 import json
@@ -35,7 +35,6 @@ import twitter
 import requests 
 
 from TwitterController import TwitterController
-from appengine_oauth import oauth
 from gaesessions import get_current_session
 from gaesessions import delete_expired_sessions
 from google.appengine.ext import ndb
@@ -84,7 +83,7 @@ class ShowData(MainHandler):
 
 class TwitterSignin(MainHandler):
     def get(self):
-        pass
+        
 
 class TwitterCallback(MainHandler):
     def get(self):
@@ -94,7 +93,7 @@ def check_user_exists(user):
     pass
 
 def show_info(user):
-	logging.info("nickname: %s, auth_domain: %s, email: %s, federated_identity: %s, federated_provided: %s, user_id: %s " % (user.nickname(), user.auth_domain(), user.email(), user.federated_identity(), user.federated_provider(), user.user_id()))
+	logging.info("aanickname: %s, auth_domain: %s, email: %s, federated_identity: %s, federated_provided: %s, user_id: %s " % (user.nickname(), user.auth_domain(), user.email(), user.federated_identity(), user.federated_provider(), user.user_id()))
 
 def dummyfunc():
 	pass
