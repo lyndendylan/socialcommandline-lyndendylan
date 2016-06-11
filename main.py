@@ -96,6 +96,9 @@ def check_user_exists(user):
 def show_info(user):
 	logging.info("nickname: %s, auth_domain: %s, email: %s, federated_identity: %s, federated_provided: %s, user_id: %s " % (user.nickname(), user.auth_domain(), user.email(), user.federated_identity(), user.federated_provider(), user.user_id()))
 
+def dummyfunc():
+	pass
+
 app = webapp2.WSGIApplication([
 
     ('/', HomePage),
