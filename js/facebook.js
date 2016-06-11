@@ -13,3 +13,16 @@ window.fbAsyncInit = function() {
      js.src = "//connect.facebook.net/en_US/sdk.js";
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
+
+(function(){
+  var loginButton = document.getElementsByClassName("btn btn-block btn-social btn-facebook");
+  loginButton.onclick = function() {FB.getLoginStatus(function(response) {
+  if (response.status === 'connected') {
+    console.log('Logged in.');
+  }
+  else {
+    FB.login();
+  }
+});
+}
+  })

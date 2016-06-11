@@ -20,7 +20,7 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), "lib"))
 sys.path.append(os.path.join(os.path.dirname(__file__), "Controllers"))
 
-import tweepy
+
 import webapp2
 import jinja2
 import json
@@ -65,7 +65,8 @@ class MainHandler(webapp2.RequestHandler):
 
 class HomePage(MainHandler):
     def get(self):
-        self.render("homepage.html")
+        data = range(1, 20)
+        self.render("homepage.html", numbers=data)
 
 class WhatIs(MainHandler):
     def get(self):
@@ -83,7 +84,7 @@ class ShowData(MainHandler):
 
 class TwitterSignin(MainHandler):
     def get(self):
-        
+        pass
 
 class TwitterCallback(MainHandler):
     def get(self):
@@ -99,7 +100,6 @@ def dummyfunc():
 	pass
 
 app = webapp2.WSGIApplication([
-
     ('/', HomePage),
     ('/whatisscl', WhatIs),
     ('/profile', Profile),
