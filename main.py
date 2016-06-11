@@ -20,7 +20,7 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), "lib"))
 sys.path.append(os.path.join(os.path.dirname(__file__), "Controllers"))
 
-
+import tweepy
 import webapp2
 import jinja2
 import json
@@ -35,7 +35,6 @@ import twitter
 import requests 
 
 from TwitterController import TwitterController
-from appengine_oauth import oauth
 from gaesessions import get_current_session
 from gaesessions import delete_expired_sessions
 from google.appengine.ext import ndb
