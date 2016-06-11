@@ -83,7 +83,7 @@ class ShowData(MainHandler):
 
 class TwitterSignin(MainHandler):
     def get(self):
-        pass
+        
 
 class TwitterCallback(MainHandler):
     def get(self):
@@ -93,7 +93,7 @@ def check_user_exists(user):
     pass
 
 def show_info(user):
-	logging.info("nickname: %s, auth_domain: %s, email: %s, federated_identity: %s, federated_provided: %s, user_id: %s " % (user.nickname(), user.auth_domain(), user.email(), user.federated_identity(), user.federated_provider(), user.user_id()))
+	logging.info("aanickname: %s, auth_domain: %s, email: %s, federated_identity: %s, federated_provided: %s, user_id: %s " % (user.nickname(), user.auth_domain(), user.email(), user.federated_identity(), user.federated_provider(), user.user_id()))
 
 app = webapp2.WSGIApplication([
 
