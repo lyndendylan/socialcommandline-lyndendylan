@@ -35,7 +35,6 @@ import twitter
 import requests 
 
 from TwitterController import TwitterController
-from appengine_oauth import oauth
 from gaesessions import get_current_session
 from gaesessions import delete_expired_sessions
 from google.appengine.ext import ndb
