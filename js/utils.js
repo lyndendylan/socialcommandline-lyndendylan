@@ -5,3 +5,5 @@ function showModal(modalId) {
 function hideModal(modalId) {
 	$("#"+modalId).modal('hide');
 }
+
+
