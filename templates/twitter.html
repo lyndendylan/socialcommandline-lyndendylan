@@ -7,12 +7,10 @@
 {% endblock %}
 
 {% block content %}
-	<br>
-	<br>
-	<div>{{client}}</div>
-	<br>
-	<br>
-	<div>{{content}}</div>
+	
+	{% for tweet in tweets %}
+		<p>{{tweet.text}}</p>
+	{% endfor %}
 	
 {% endblock %}
 

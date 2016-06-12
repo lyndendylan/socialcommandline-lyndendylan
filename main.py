@@ -20,7 +20,6 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), "lib"))
 sys.path.append(os.path.join(os.path.dirname(__file__), "Controllers"))
 
-import tweepy
 import webapp2
 import jinja2
 import json
@@ -45,6 +44,7 @@ from urllib import unquote as urlunquote
 from xml.dom import minidom
 
 access_token = "739842667916492800-FJg9hohBppMJ8w816cmJVCE6tv58825"
+access_token_secret = "wd1EYa0tKzRhYY3gvHFnpZzBja5Ya4NWV56sFsSackgD7"
 consumer_key = "MIEorUIGXR3Z4W4aUsv83hled"
 consumer_secret = "GyEJT7eTiYTIWmyc2sNGnFXNv790DAhNe9CrxNYwoUm5yMMfN0"
 callback_url = "https://socialcommandline.appspot.com/twitter_callback"
@@ -82,11 +82,12 @@ class ShowData(MainHandler):
 
 class TwitterSignin(MainHandler):
     def get(self):
-    	pass 
+  		pass
 
 class TwitterCallback(MainHandler):
     def get(self):
-        pass
+        self.write("user logged in")
+		
 
 def check_user_exists(user):
     pass

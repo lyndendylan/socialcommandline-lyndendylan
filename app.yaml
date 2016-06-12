@@ -29,3 +29,5 @@ libraries:
   version: latest
 - name: django
   version: latest
+- name: ssl
+  version: latest
