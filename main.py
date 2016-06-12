@@ -30,7 +30,6 @@ import re
 import logging
 import httplib2
 import functools
-import twitter
 import requests 
 
 from TwitterController import TwitterController
