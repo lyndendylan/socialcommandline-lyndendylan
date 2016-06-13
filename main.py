@@ -81,11 +81,12 @@ class ShowData(MainHandler):
 
 class TwitterSignin(MainHandler):
     def get(self):
-  		pass
+    	pass
 
+    	
 class TwitterCallback(MainHandler):
     def get(self):
-        self.write("user logged in")
+        self.write("blah nigga")
 		
 
 def check_user_exists(user):
