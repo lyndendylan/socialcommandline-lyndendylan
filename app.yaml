@@ -1,4 +1,4 @@
-application: socialcommandline
+application: socialcommandline-1
 version: 1
 runtime: python27
 api_version: 1
@@ -6,6 +6,7 @@ threadsafe: yes
 
 env_variables:
   DJANGO_SETTINGS_MODULE: 'settings'
+  GAE_USE_SOCKETS_HTTPLIB : True
   
 handlers:
 - url: /favicon\.ico
@@ -28,4 +29,6 @@ libraries:
 - name: jinja2
   version: latest
 - name: django
+  version: latest
+- name: ssl
   version: latest

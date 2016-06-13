@@ -20,6 +20,7 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), "lib"))
 sys.path.append(os.path.join(os.path.dirname(__file__), "Controllers"))
 
+
 import webapp2
 import jinja2
 import json
@@ -31,8 +32,8 @@ import logging
 import httplib2
 import functools
 import requests 
+import tweepy
 
-from TwitterController import TwitterController
 from gaesessions import get_current_session
 from gaesessions import delete_expired_sessions
 from google.appengine.ext import ndb
@@ -81,9 +82,13 @@ class ShowData(MainHandler):
 
 class TwitterSignin(MainHandler):
     def get(self):
-    	pass
+    	auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    	auth.set_access_token(access_token, access_token_secret)
+    	api = tweepy.API(auth)
+    	public_tweets = api.home_timeline()
+    	self.render("twitter.html", tweets=public_tweets)
 
-    	
+
 class TwitterCallback(MainHandler):
     def get(self):
         self.write("blah nigga")
