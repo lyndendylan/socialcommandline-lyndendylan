@@ -5,6 +5,7 @@ api_version: 1
 threadsafe: yes
 
 env_variables:
+  DJANGO_SETTINGS_MODULE: 'settings'
   GAE_USE_SOCKETS_HTTPLIB : True
   
 handlers:

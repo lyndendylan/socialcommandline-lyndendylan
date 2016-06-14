@@ -7,9 +7,12 @@
 {% endblock %}
 
 {% block content %}
-	<a href="{{gurl}}" class="btn btn-block btn-social btn-google">
-    	<span class="fa fa-google"></span> Sign Out
-	</a>
+	
+	<h1>{{oauth_token}}</h1>
+
+	<a href="/load_dylans_timeline" class="btn btn-block btn-social btn-twitter">
+    				<span class="fa fa-twitter"></span> Load Dylans Timeline
+  				</a>
 {% endblock %}
 
 {% block footer %}

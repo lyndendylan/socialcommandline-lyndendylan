@@ -93,23 +93,30 @@ class LoadDylansTimeline(MainHandler):
 	    	calling api.home_timeline() retrieves all the public tweets from my account @code_monkey_dyl
 
     	"""
-    	auth = tweepy.OAuthHandler(consumer_key, consumer_secret, local_callback_url)
+    	auth = tweepy.OAuthHandler(consumer_key, consumer_secret, live_callback_url)
     	auth.set_access_token(access_token, access_token_secret)
     	api = tweepy.API(auth)
     	public_tweets = api.home_timeline()
-    	self.render("twitter.html", tweets=public_tweets)
+    	self.render("dylans_timeline.html", tweets=public_tweets, session_var = get_current_session()["twitter_load"])
 
 class LoadTwitterTimeline(MainHandler):
 	def get(self):
 		auth = tweepy.OAuthHandler(consumer_key, consumer_secret, live_callback_url)
 		auth.set_access_token(access_token, access_token_secret)
-    	try:
-    		redirect_url = auth.get_authorization_url()
-    		logging.error(redirect_url)
-    	except tweepy.TweepError as te:
-    		logging.error(str(te))
+		url = auth.get_authorization_url()
 
- 
+		"""
+			request_token example = oauth_token: {u'oauth_token_secret': u'VsAvH1eoawvqAXmaQVI54dAhsxKDc40Y', u'oauth_token': u'oi8DWQAAAAAAvhbCAAABVU3sDsk', u'oauth_callback_confirmed': u'true'}
+		"""	
+
+		session = get_current_session()
+		if session.is_active():
+			session.terminate()
+
+		session["twitter_load"] = "true"
+		request_token = auth.request_token
+		self.render("profile.html", **request_token)
+
 class LoadFacebookTimeline(MainHandler):
 	def get(self):
 		pass
@@ -117,6 +124,8 @@ class LoadFacebookTimeline(MainHandler):
 class LiveTwitterCallback(MainHandler):
     def get(self):
     	pass
+    	# oauth_token = self.request.get("oauth_token")
+    	# self.render("twitter.html", tweets = [], oauth_token=oauth)
 
 class LocalTwitterCallback(MainHandler):
     def get(self):
