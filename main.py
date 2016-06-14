@@ -34,20 +34,22 @@ import functools
 import requests 
 import tweepy
 
-from gaesessions import get_current_session
-from gaesessions import delete_expired_sessions
-from google.appengine.ext import ndb
-from google.appengine.api import mail
-from google.appengine.api import users
-from google.appengine.api import urlfetch
-from urllib import unquote as urlunquote
-from xml.dom import minidom
+from gaesessions 						import get_current_session
+from gaesessions 						import delete_expired_sessions
+from google.appengine.ext.webapp.util 	import run_wsgi_app
+from google.appengine.ext 				import ndb
+from google.appengine.api 				import mail
+from google.appengine.api 				import users
+from google.appengine.api 				import urlfetch
+from urllib 							import unquote as urlunquote
+from xml.dom 							import minidom
 
 access_token = "739842667916492800-FJg9hohBppMJ8w816cmJVCE6tv58825"
 access_token_secret = "wd1EYa0tKzRhYY3gvHFnpZzBja5Ya4NWV56sFsSackgD7"
 consumer_key = "MIEorUIGXR3Z4W4aUsv83hled"
 consumer_secret = "GyEJT7eTiYTIWmyc2sNGnFXNv790DAhNe9CrxNYwoUm5yMMfN0"
-callback_url = "https://socialcommandline.appspot.com/twitter_callback"
+live_callback_url = "https://socialcommandline.appspot.com/live_twitter_callback"
+local_callback_url = "localhost:8080/local_twitter_callback"
 
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape = True)
@@ -80,22 +82,45 @@ class ShowData(MainHandler):
         users = User.get_all()
         self.render("data.html", users=users)
 
-class TwitterSignin(MainHandler):
+class LoadDylansTimeline(MainHandler):
     def get(self):
-    	auth = tweepy.OAuthHandler(consumer_key, consumer_secret, callback_url)
+
+    	"""
+	    	create the ouath object for my application thats registered on apps.twitter.com
+	    	set the access token so twitter knows its my app accessing their apis
+	    	then create the api object
+	    	the app is registered on my twitter account which is under screen name @code_monkey_dyl
+	    	calling api.home_timeline() retrieves all the public tweets from my account @code_monkey_dyl
+
+    	"""
+    	auth = tweepy.OAuthHandler(consumer_key, consumer_secret, local_callback_url)
     	auth.set_access_token(access_token, access_token_secret)
     	api = tweepy.API(auth)
     	public_tweets = api.home_timeline()
     	self.render("twitter.html", tweets=public_tweets)
 
+class LoadTwitterTimeline(MainHandler):
+	def get(self):
+		auth = tweepy.OAuthHandler(consumer_key, consumer_secret, live_callback_url)
+		auth.set_access_token(access_token, access_token_secret)
+    	try:
+    		redirect_url = auth.get_authorization_url()
+    		logging.error(redirect_url)
+    	except tweepy.TweepError as te:
+    		logging.error(str(te))
 
-class TwitterCallback(MainHandler):
+ 
+class LoadFacebookTimeline(MainHandler):
+	def get(self):
+		pass
+
+class LiveTwitterCallback(MainHandler):
     def get(self):
-        self.write("blah nigga")
-		
+    	pass
 
-def check_user_exists(user):
-    pass
+class LocalTwitterCallback(MainHandler):
+    def get(self):
+    	pass
 
 def show_info(user):
 	logging.info("aanickname: %s, auth_domain: %s, email: %s, federated_identity: %s, federated_provided: %s, user_id: %s " % (user.nickname(), user.auth_domain(), user.email(), user.federated_identity(), user.federated_provider(), user.user_id()))
@@ -106,7 +131,13 @@ app = webapp2.WSGIApplication([
     ('/whatisscl', WhatIs),
     ('/profile', Profile),
     ('/showdata', ShowData),
-    ('/twitter_signin', TwitterSignin),
-    ('/twitter_callback', TwitterCallback)
+    ('/load_dylans_timeline', LoadDylansTimeline),
+    ('/load_twitter_timeline', LoadTwitterTimeline),
+    ('/load_facebook_timeline', LoadFacebookTimeline),
+    (local_callback_url, LocalTwitterCallback),
+    (live_callback_url, LiveTwitterCallback)
+
 
 ], debug=True)
+
+run_wsgi_app(app)
